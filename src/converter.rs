@@ -1,4 +1,4 @@
-use color_thief::{Color};
+use color_thief::Color;
 use failure::Error;
 
 fn map_rgb<'a>(match_number: &'a usize) -> &'a str {
@@ -19,7 +19,7 @@ fn map_rgb<'a>(match_number: &'a usize) -> &'a str {
         13 => "D",
         14 => "E",
         15 => "F",
-        _ => panic!("[designer] map_rgb not match match_number value.")
+        _ => panic!("[designer] map_rgb not match match_number value."),
     };
 
     match_str
@@ -43,7 +43,7 @@ fn rgb(color: &Color) -> Result<Vec<f32>, Error> {
     let g = to_number(&color.g.to_string());
     let b = to_number(&color.b.to_string());
 
-    return Ok(vec![round(r, 4), round(g, 4), round(b, 4)])
+    return Ok(vec![round(r, 4), round(g, 4), round(b, 4)]);
 }
 
 pub fn rgb2hex(color: &Color) -> Result<String, Error> {

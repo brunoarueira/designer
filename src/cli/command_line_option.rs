@@ -4,10 +4,10 @@ mod converter;
 use std::fs::File;
 use std::io::prelude::*;
 
-use clap::{ArgMatches};
-use color_thief::{Color};
+use clap::ArgMatches;
+use color_thief::Color;
 
-use crate::decoder::image::{Image};
+use crate::decoder::image::Image;
 
 fn color_format(format: &str, value: &Color) {
     if format == "rgb" {
@@ -30,10 +30,18 @@ fn palette(matches: &ArgMatches, format: &str, image: &Image) {
     } else if output == "file" {
         let output_filename = format!("{}.txt", image_basename);
 
-        let mut output_file = File::create(&output_filename).expect("failed to create the output file");
+        let mut output_file =
+            File::create(&output_filename).expect("failed to create the output file");
 
         output_file
-            .write_all(colors.iter().map(|v| v.to_string()).collect::<Vec<_>>().join(",").as_bytes())
+            .write_all(
+                colors
+                    .iter()
+                    .map(|v| v.to_string())
+                    .collect::<Vec<_>>()
+                    .join(",")
+                    .as_bytes(),
+            )
             .expect("the pallete could not be exported to the output file");
 
         println!("File {} was successfully created!", &output_filename);
@@ -49,14 +57,14 @@ fn dominant_color(format: &str, image: &Image) {
 #[derive(Debug)]
 pub struct CommandLineOption<'a> {
     matches: &'a ArgMatches<'a>,
-    image: &'a Image<'a>
+    image: &'a Image<'a>,
 }
 
 impl<'a> CommandLineOption<'a> {
     pub fn new(matches: &'a ArgMatches<'a>, image: &'a Image<'a>) -> Self {
         CommandLineOption {
             matches: matches,
-            image: image
+            image: image,
         }
     }
 

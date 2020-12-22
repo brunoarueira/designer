@@ -1,14 +1,14 @@
 #[macro_use]
 extern crate clap;
 
-use clap::{Arg, App};
+use clap::{App, Arg};
 use failure::Error;
 
-mod decoder;
 mod cli;
+mod decoder;
 
-use decoder::image::{Image};
-use cli::command_line_option::{CommandLineOption};
+use cli::command_line_option::CommandLineOption;
+use decoder::image::Image;
 
 fn main() -> Result<(), Error> {
     let matches =

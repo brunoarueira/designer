@@ -1,6 +1,6 @@
 use color_thief::{Color, ColorFormat};
 
-use std::path::{Path};
+use std::path::Path;
 
 fn find_color(t: image::ColorType) -> ColorFormat {
     match t {
@@ -12,14 +12,12 @@ fn find_color(t: image::ColorType) -> ColorFormat {
 
 #[derive(Debug)]
 pub struct Image<'a> {
-    path: &'a str
+    path: &'a str,
 }
 
 impl<'a> Image<'a> {
     pub fn new(path: &'a str) -> Self {
-        Image {
-            path: path
-        }
+        Image { path: path }
     }
 
     fn resolved_path(&self) -> &Path {
