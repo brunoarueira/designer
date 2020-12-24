@@ -6,6 +6,10 @@ It's a cli app made with rust and can be integrated with other apps or whitelabe
 
 ## Features
 
+- List a collor palette on rgb or hex from a brand logo;
+- Return the dominant color from a brand logo (on rgb or hex);
+- Output the collor palette to a file joined each color with commas.
+
 ## Usage
 
 ```
