@@ -1,5 +1,8 @@
 # designer
 
+[![Build Status](https://travis-ci.org/brunoarueira/designer.svg?branch=master)](https://travis-ci.org/brunoarueira/designer)
+[![codecov](https://codecov.io/gh/brunoarueira/designer/branch/master/graph/badge.svg)](https://codecov.io/gh/brunoarueira/designer)
+
 Does nice things with images, colors and generate palette colors too
 
 It's a cli app made with rust and can be integrated with other apps or whitelabel app, which most of the time the customer supply a brand logo and someone extract colors or a palette colors to customize the app or the web app.
