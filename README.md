@@ -1,6 +1,6 @@
 # designer
 
-[![Build Status](https://travis-ci.org/brunoarueira/designer.svg?branch=master)](https://travis-ci.org/brunoarueira/designer)
+[![Build Status](https://travis-ci.com/brunoarueira/designer.svg?branch=master)](https://travis-ci.com/brunoarueira/designer)
 [![codecov](https://codecov.io/gh/brunoarueira/designer/branch/master/graph/badge.svg)](https://codecov.io/gh/brunoarueira/designer)
 
 Does nice things with images, colors and generate palette colors too
