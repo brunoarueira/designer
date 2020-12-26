@@ -58,7 +58,7 @@ fn test_color_palette_output_as_hex_to_stdout() {
 
     assert_eq!(
         result,
-        b"#737373\n#040404\n#FBE383\n#98AB44\n#3CAB80\n#78AB3C\n#78AB3C\n#78AB3C\n#78AB3C\n"
+        b"#747474\n#040404\n#FCE484\n#98AC44\n#3CAC80\n#78AC3C\n#78AC3C\n#78AC3C\n#78AC3C\n"
     );
 }
 
@@ -93,7 +93,7 @@ fn test_dominant_color_as_hex_to_stdout() {
 
     command_line_option.handle(&mut result);
 
-    assert_eq!(result, b"#737373\n");
+    assert_eq!(result, b"#747474\n");
 }
 
 #[test]
@@ -144,7 +144,7 @@ fn test_color_palette_output_as_hex_to_file() {
 
     assert_eq!(
         read_to_string(fixture_path("image-fixture-hex.txt")).unwrap(),
-        "#737373,#040404,#FBE383,#98AB44,#3CAB80,#78AB3C,#78AB3C,#78AB3C,#78AB3C\n"
+        "#747474,#040404,#FCE484,#98AC44,#3CAC80,#78AC3C,#78AC3C,#78AC3C,#78AC3C\n"
     );
 }
 

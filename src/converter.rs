@@ -25,12 +25,6 @@ fn map_rgb<'a>(match_number: &'a usize) -> &'a str {
     match_str
 }
 
-fn round(value: f32, digit: u32) -> f32 {
-    let a = 10usize.pow(digit) as f32;
-
-    (value * a).round() / a
-}
-
 fn to_number(value: &str) -> f32 {
     match value.parse::<f32>() {
         Ok(value) => value / 255f32,
@@ -43,7 +37,7 @@ fn rgb(color: &Color) -> Result<Vec<f32>, Error> {
     let g = to_number(&color.g.to_string());
     let b = to_number(&color.b.to_string());
 
-    Ok(vec![round(r, 4), round(g, 4), round(b, 4)])
+    Ok(vec![r, g, b])
 }
 
 pub fn rgb2hex(color: &Color) -> Result<String, Error> {
