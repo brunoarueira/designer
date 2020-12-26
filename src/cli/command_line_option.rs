@@ -74,8 +74,8 @@ pub struct CommandLineOption<'a> {
 impl<'a> CommandLineOption<'a> {
     pub fn new(matches: &'a ArgMatches<'a>, image: &'a Image<'a>) -> Self {
         CommandLineOption {
-            matches: matches,
-            image: image,
+            matches,
+            image,
         }
     }
 
