@@ -17,7 +17,7 @@ pub struct Image<'a> {
 
 impl<'a> Image<'a> {
     pub fn new(path: &'a str) -> Self {
-        Image { path: path }
+        Image { path }
     }
 
     fn resolved_path(&self) -> &Path {

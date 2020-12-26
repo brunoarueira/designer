@@ -10,6 +10,7 @@ mod decoder;
 use cli::command_line_option::CommandLineOption;
 use decoder::image::Image;
 
+#[cfg(not(tarpaulin_include))]
 fn main() -> Result<(), Error> {
     let matches =
         App::new(crate_name!())

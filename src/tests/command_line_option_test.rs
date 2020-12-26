@@ -11,7 +11,7 @@ use crate::cli::command_line_option::CommandLineOption;
 use crate::decoder::image::Image;
 
 #[test]
-fn test_color_palette_output_to_stdout() {
+fn test_color_palette_output_as_rgb_to_stdout() {
     let mut result = Vec::new();
     let path = fixture_path("image-fixture.png");
     let image = Image::new(&path);
@@ -37,7 +37,67 @@ fn test_color_palette_output_to_stdout() {
 }
 
 #[test]
-fn test_color_palette_output_to_file() {
+fn test_color_palette_output_as_hex_to_stdout() {
+    let mut result = Vec::new();
+    let path = fixture_path("image-fixture.png");
+    let image = Image::new(&path);
+    let matches = App::new("myprog")
+        .arg(Arg::with_name("b").short("b").takes_value(true))
+        .arg(Arg::with_name("format").short("f").takes_value(true))
+        .arg(Arg::with_name("palette").short("p"))
+        .arg(
+            Arg::with_name("output")
+                .short("o")
+                .default_value("terminal")
+                .takes_value(true),
+        )
+        .get_matches_from(vec!["myprog", "-b", &path, "-f", "hex", "-p"]);
+    let command_line_option = CommandLineOption::new(&matches, &image);
+
+    command_line_option.handle(&mut result);
+
+    assert_eq!(
+        result,
+        b"#747474\n#040404\n#FCE484\n#98AC44\n#3CAC80\n#78AC3C\n#78AC3C\n#78AC3C\n#78AC3C\n"
+    );
+}
+
+#[test]
+fn test_dominant_color_as_rgb_to_stdout() {
+    let mut result = Vec::new();
+    let path = fixture_path("image-fixture.png");
+    let image = Image::new(&path);
+    let matches = App::new("myprog")
+        .arg(Arg::with_name("b").short("b").takes_value(true))
+        .arg(Arg::with_name("format").short("f").takes_value(true))
+        .arg(Arg::with_name("dominant-color").short("o"))
+        .get_matches_from(vec!["myprog", "-b", &path, "-f", "rgb", "-o"]);
+    let command_line_option = CommandLineOption::new(&matches, &image);
+
+    command_line_option.handle(&mut result);
+
+    assert_eq!(result, b"rgb(116,116,116)\n");
+}
+
+#[test]
+fn test_dominant_color_as_hex_to_stdout() {
+    let mut result = Vec::new();
+    let path = fixture_path("image-fixture.png");
+    let image = Image::new(&path);
+    let matches = App::new("myprog")
+        .arg(Arg::with_name("b").short("b").takes_value(true))
+        .arg(Arg::with_name("format").short("f").takes_value(true))
+        .arg(Arg::with_name("dominant-color").short("o"))
+        .get_matches_from(vec!["myprog", "-b", &path, "-f", "hex", "-o"]);
+    let command_line_option = CommandLineOption::new(&matches, &image);
+
+    command_line_option.handle(&mut result);
+
+    assert_eq!(result, b"#747474\n");
+}
+
+#[test]
+fn test_color_palette_output_as_rgb_to_file() {
     let mut result = Vec::new();
     let path = fixture_path("image-fixture.png");
     let image = Image::new(&path);
@@ -57,8 +117,34 @@ fn test_color_palette_output_to_file() {
     command_line_option.handle(&mut result);
 
     assert_eq!(
-        read_to_string(fixture_path("image-fixture.txt")).unwrap(),
+        read_to_string(fixture_path("image-fixture-rgb.txt")).unwrap(),
         "rgb(116,116,116),rgb(4,4,4),rgb(252,228,132),rgb(152,172,68),rgb(60,172,128),rgb(120,172,60),rgb(120,172,60),rgb(120,172,60),rgb(120,172,60)\n"
+    );
+}
+
+#[test]
+fn test_color_palette_output_as_hex_to_file() {
+    let mut result = Vec::new();
+    let path = fixture_path("image-fixture.png");
+    let image = Image::new(&path);
+    let matches = App::new("myprog")
+        .arg(Arg::with_name("b").short("b").takes_value(true))
+        .arg(Arg::with_name("format").short("f").takes_value(true))
+        .arg(Arg::with_name("palette").short("p"))
+        .arg(
+            Arg::with_name("output")
+                .short("o")
+                .default_value("file")
+                .takes_value(true),
+        )
+        .get_matches_from(vec!["myprog", "-b", &path, "-f", "hex", "-p"]);
+    let command_line_option = CommandLineOption::new(&matches, &image);
+
+    command_line_option.handle(&mut result);
+
+    assert_eq!(
+        read_to_string(fixture_path("image-fixture-hex.txt")).unwrap(),
+        "#747474,#040404,#FCE484,#98AC44,#3CAC80,#78AC3C,#78AC3C,#78AC3C,#78AC3C\n"
     );
 }
 
