@@ -1,4 +1,7 @@
 language: rust
+branches:
+  only:
+    - master
 dist: bionic # tarpaulin requires this distro
 addons:
   apt:
