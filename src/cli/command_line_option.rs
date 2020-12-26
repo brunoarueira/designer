@@ -37,11 +37,11 @@ fn palette(matches: &ArgMatches, format: &str, image: &Image, mut writer: impl W
                 output_file
                     .write_all(
                         colors
-                        .iter()
-                        .map(|v| v.to_string())
-                        .collect::<Vec<_>>()
-                        .join(",")
-                        .as_bytes(),
+                            .iter()
+                            .map(|v| v.to_string())
+                            .collect::<Vec<_>>()
+                            .join(",")
+                            .as_bytes(),
                     )
                     .expect("the palette could not be exported to the output file");
 
@@ -49,9 +49,10 @@ fn palette(matches: &ArgMatches, format: &str, image: &Image, mut writer: impl W
                     writer,
                     "File {} was successfully created!",
                     &output_filename
-                ).unwrap();
+                )
+                .unwrap();
             }
-        },
+        }
         None => {
             writeln!(writer, "The palette could not be extracted from image").unwrap();
         }

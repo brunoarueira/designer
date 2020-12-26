@@ -1,4 +1,7 @@
 language: rust
+branches:
+  only:
+    - master
 dist: bionic # tarpaulin requires this distro
 addons:
   apt:
@@ -14,14 +17,17 @@ matrix:
     - rust: nightly
 
 before_script: |
+  rustup component add clippy
+
   if [[ "$TRAVIS_RUST_VERSION" == stable ]]; then
     cargo install cargo-tarpaulin
   fi
 
 script:
-- cargo clean
-- cargo build
-- cargo test
+  - cargo clippy
+  - cargo clean
+  - cargo build
+  - cargo test
 
 after_success: |
   if [[ "$TRAVIS_RUST_VERSION" == stable ]]; then
