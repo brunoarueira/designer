@@ -31,14 +31,16 @@ impl<'a> Image<'a> {
                 let colors =
                     color_thief::get_palette(&image.into_bytes(), color_type, 10, 10).unwrap();
 
-                return Some(colors);
+                Some(colors)
             }
             Err(error) => {
                 match error {
-                    image::ImageError::IoError(error) => {
+                    image::ImageError::IoError(_error) => {
                         println!("Problem opening the file: {}", &self.path);
-                    },
-                    _ => { panic!("Unexpected error when opening the file: {}", &self.path) }
+                    }
+                    _ => {
+                        panic!("Unexpected error when opening the file: {}", &self.path)
+                    }
                 }
 
                 None

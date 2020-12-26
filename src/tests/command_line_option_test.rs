@@ -19,7 +19,12 @@ fn test_color_palette_output_to_stdout() {
         .arg(Arg::with_name("b").short("b").takes_value(true))
         .arg(Arg::with_name("format").short("f").takes_value(true))
         .arg(Arg::with_name("palette").short("p"))
-        .arg(Arg::with_name("output").short("o").default_value("terminal").takes_value(true))
+        .arg(
+            Arg::with_name("output")
+                .short("o")
+                .default_value("terminal")
+                .takes_value(true),
+        )
         .get_matches_from(vec!["myprog", "-b", &path, "-f", "rgb", "-p"]);
     let command_line_option = CommandLineOption::new(&matches, &image);
 
@@ -40,7 +45,12 @@ fn test_color_palette_output_to_file() {
         .arg(Arg::with_name("b").short("b").takes_value(true))
         .arg(Arg::with_name("format").short("f").takes_value(true))
         .arg(Arg::with_name("palette").short("p"))
-        .arg(Arg::with_name("output").short("o").default_value("file").takes_value(true))
+        .arg(
+            Arg::with_name("output")
+                .short("o")
+                .default_value("file")
+                .takes_value(true),
+        )
         .get_matches_from(vec!["myprog", "-b", &path, "-f", "rgb", "-p"]);
     let command_line_option = CommandLineOption::new(&matches, &image);
 
@@ -61,14 +71,16 @@ fn test_color_palette_output_from_not_found_image_to_file() {
         .arg(Arg::with_name("b").short("b").takes_value(true))
         .arg(Arg::with_name("format").short("f").takes_value(true))
         .arg(Arg::with_name("palette").short("p"))
-        .arg(Arg::with_name("output").short("o").default_value("file").takes_value(true))
+        .arg(
+            Arg::with_name("output")
+                .short("o")
+                .default_value("file")
+                .takes_value(true),
+        )
         .get_matches_from(vec!["myprog", "-b", &path, "-f", "rgb", "-p"]);
     let command_line_option = CommandLineOption::new(&matches, &image);
 
     command_line_option.handle(&mut result);
 
-    assert_eq!(
-        result,
-        b"The palette could not be extracted from image\n"
-    );
+    assert_eq!(result, b"The palette could not be extracted from image\n");
 }
