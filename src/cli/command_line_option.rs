@@ -9,11 +9,11 @@ use color_thief::Color;
 
 use crate::decoder::image::Image;
 
-fn color_format(format: &str, value: &Color, mut writer: impl Write) {
+fn color_format(format: &str, value: &Color) -> String {
     if format == "rgb" {
-        writeln!(writer, "{}", value).unwrap();
+        format!("{}", value)
     } else {
-        writeln!(writer, "{}", converter::rgb2hex(value).unwrap()).unwrap();
+        converter::rgb2hex(value).unwrap()
     }
 }
 
@@ -26,7 +26,7 @@ fn palette(matches: &ArgMatches, format: &str, image: &Image, mut writer: impl W
 
             if output == "terminal" {
                 for color in &colors {
-                    color_format(format, &color, &mut writer);
+                    writeln!(writer, "{}", color_format(format, &color)).unwrap();
                 }
             } else if output == "file" {
                 let output_filename = format!("{}.txt", image_basename);
@@ -38,7 +38,7 @@ fn palette(matches: &ArgMatches, format: &str, image: &Image, mut writer: impl W
                     .write_all(
                         colors
                             .iter()
-                            .map(|v| v.to_string())
+                            .map(|c| color_format(format, c))
                             .collect::<Vec<_>>()
                             .join(",")
                             .as_bytes(),
@@ -59,12 +59,6 @@ fn palette(matches: &ArgMatches, format: &str, image: &Image, mut writer: impl W
     }
 }
 
-fn dominant_color(format: &str, image: &Image, writer: impl Write) {
-    let dominant_color = image.dominant_color();
-
-    color_format(format, &dominant_color, writer);
-}
-
 #[derive(Debug)]
 pub struct CommandLineOption<'a> {
     matches: &'a ArgMatches<'a>,
@@ -79,6 +73,12 @@ impl<'a> CommandLineOption<'a> {
         }
     }
 
+    fn dominant_color(&self, format: &str, mut writer: impl Write) {
+        let dominant_color = self.image.dominant_color();
+
+        writeln!(writer, "{}", color_format(format, &dominant_color)).unwrap();
+    }
+
     pub fn handle(&self, mut writer: impl Write) {
         let format = self.matches.value_of("format").unwrap();
 
@@ -87,7 +87,7 @@ impl<'a> CommandLineOption<'a> {
         }
 
         if self.matches.occurrences_of("dominant-color") > 0 {
-            dominant_color(&format, &self.image, &mut writer);
+            self.dominant_color(&format, &mut writer);
         }
     }
 }
