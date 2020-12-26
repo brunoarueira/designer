@@ -17,7 +17,7 @@ fn main() -> Result<(), Error> {
         .author(crate_authors!())
         .about(crate_description!())
         .arg(Arg::with_name("brand-logo")
-            .short("bl")
+            .short("b")
             .long("brand-logo")
             .help("Brand logo needed to extract usefull data (e.g. most significant colors, color palette and others")
             .value_name("FILE")
@@ -57,7 +57,11 @@ fn main() -> Result<(), Error> {
 
     let command_line_option = CommandLineOption::new(&matches, &image);
 
-    command_line_option.handle();
+    command_line_option.handle(std::io::stdout());
 
     Ok(())
 }
+
+#[cfg(test)]
+#[cfg(not(tarpaulin_include))]
+mod tests;

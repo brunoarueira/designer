@@ -24,12 +24,26 @@ impl<'a> Image<'a> {
         Path::new(&self.path)
     }
 
-    pub fn palette(&self) -> Vec<Color> {
-        let image = image::open(&self.resolved_path()).unwrap();
-        let color_type = find_color(image.color());
-        let colors = color_thief::get_palette(&image.into_bytes(), color_type, 10, 10).unwrap();
+    pub fn palette(&self) -> Option<Vec<Color>> {
+        match image::open(&self.resolved_path()) {
+            Ok(image) => {
+                let color_type = find_color(image.color());
+                let colors =
+                    color_thief::get_palette(&image.into_bytes(), color_type, 10, 10).unwrap();
 
-        colors
+                return Some(colors);
+            }
+            Err(error) => {
+                match error {
+                    image::ImageError::IoError(error) => {
+                        println!("Problem opening the file: {}", &self.path);
+                    },
+                    _ => { panic!("Unexpected error when opening the file: {}", &self.path) }
+                }
+
+                None
+            }
+        }
     }
 
     pub fn file_basename(&self) -> &str {
@@ -37,6 +51,6 @@ impl<'a> Image<'a> {
     }
 
     pub fn dominant_color(&self) -> Color {
-        self.palette()[0]
+        self.palette().unwrap()[0]
     }
 }
