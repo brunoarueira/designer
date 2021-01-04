@@ -1,5 +1,5 @@
 use color_thief::Color;
-use failure::Error;
+use anyhow::Error;
 
 fn map_rgb<'a>(match_number: &'a usize) -> &'a str {
     let match_str: &'a str = match *match_number {

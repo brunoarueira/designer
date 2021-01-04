@@ -2,7 +2,7 @@
 extern crate clap;
 
 use clap::{App, Arg};
-use failure::Error;
+use anyhow::Error;
 
 mod cli;
 mod decoder;

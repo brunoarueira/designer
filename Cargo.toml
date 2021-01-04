@@ -10,5 +10,5 @@ edition = "2018"
 [dependencies]
 clap = "2"
 color-thief = "*"
-failure = "*"
 image = "*"
+anyhow = "*"
