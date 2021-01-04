@@ -18,6 +18,7 @@ matrix:
 
 before_script: |
   rustup component add clippy
+  cargo install cargo-audit
 
   if [[ "$TRAVIS_RUST_VERSION" == stable ]]; then
     cargo install cargo-tarpaulin
@@ -25,6 +26,7 @@ before_script: |
 
 script:
   - cargo clippy
+  - cargo audit
   - cargo clean
   - cargo build
   - cargo test
