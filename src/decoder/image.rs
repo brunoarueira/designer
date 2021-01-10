@@ -1,11 +1,12 @@
-use color_thief::{Color, ColorFormat};
-
 use std::path::Path;
 
-fn find_color(t: image::ColorType) -> ColorFormat {
+use color_thief::{Color, ColorFormat, get_palette};
+use image::ColorType;
+
+fn find_color(t: ColorType) -> ColorFormat {
     match t {
-        image::ColorType::Rgb8 => ColorFormat::Rgb,
-        image::ColorType::Rgba8 => ColorFormat::Rgba,
+        ColorType::Rgb8 => ColorFormat::Rgb,
+        ColorType::Rgba8 => ColorFormat::Rgba,
         _ => unreachable!(),
     }
 }
@@ -28,8 +29,7 @@ impl<'a> Image<'a> {
         match image::open(&self.resolved_path()) {
             Ok(image) => {
                 let color_type = find_color(image.color());
-                let colors =
-                    color_thief::get_palette(&image.into_bytes(), color_type, 10, 10).unwrap();
+                let colors = get_palette(&image.into_bytes(), color_type, 10, 10).unwrap();
 
                 Some(colors)
             }
