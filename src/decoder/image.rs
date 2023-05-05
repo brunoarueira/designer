@@ -25,7 +25,7 @@ impl<'a> Image<'a> {
     }
 
     pub fn palette(&self) -> Option<Vec<Color>> {
-        match image::open(&self.resolved_path()) {
+        match image::open(self.resolved_path()) {
             Ok(image) => {
                 let color_type = find_color(image.color());
                 let colors =
@@ -49,7 +49,7 @@ impl<'a> Image<'a> {
     }
 
     pub fn file_basename(&self) -> &str {
-        &self.resolved_path().file_stem().unwrap().to_str().unwrap()
+        self.resolved_path().file_stem().unwrap().to_str().unwrap()
     }
 
     pub fn dominant_color(&self) -> Color {

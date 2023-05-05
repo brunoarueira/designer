@@ -26,7 +26,7 @@ fn palette(matches: &ArgMatches, format: &str, image: &Image, mut writer: impl W
 
             if output == "terminal" {
                 for color in &colors {
-                    writeln!(writer, "{}", color_format(format, &color)).unwrap();
+                    writeln!(writer, "{}", color_format(format, color)).unwrap();
                 }
             } else if output == "file" {
                 let output_filename = format!("{}.txt", image_basename);
@@ -83,11 +83,11 @@ impl<'a> CommandLineOption<'a> {
         let format = self.matches.value_of("format").unwrap();
 
         if self.matches.occurrences_of("palette") > 0 {
-            palette(&self.matches, &format, &self.image, &mut writer);
+            palette(self.matches, format, self.image, &mut writer);
         }
 
         if self.matches.occurrences_of("dominant-color") > 0 {
-            self.dominant_color(&format, &mut writer);
+            self.dominant_color(format, &mut writer);
         }
     }
 }
