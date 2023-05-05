@@ -8,7 +8,7 @@ mod cli;
 mod decoder;
 
 use cli::command_line_option::CommandLineOption;
-use decoder::image::Image;
+use decoder::Image;
 
 #[cfg(not(tarpaulin_include))]
 fn main() -> Result<(), Error> {

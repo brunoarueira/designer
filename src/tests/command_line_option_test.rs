@@ -8,7 +8,7 @@ use clap::{App, Arg};
 use test_helpers::fixture_path;
 
 use crate::cli::command_line_option::CommandLineOption;
-use crate::decoder::image::Image;
+use crate::decoder::Image;
 
 #[test]
 fn test_color_palette_output_as_rgb_to_stdout() {

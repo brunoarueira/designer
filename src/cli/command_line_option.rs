@@ -7,7 +7,7 @@ use std::io::Write;
 use clap::ArgMatches;
 use color_thief::Color;
 
-use crate::decoder::image::Image;
+use crate::decoder::Image;
 
 fn color_format(format: &str, value: &Color) -> String {
     if format == "rgb" {

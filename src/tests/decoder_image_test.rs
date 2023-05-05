@@ -3,7 +3,7 @@ mod test_helpers;
 
 use color_thief::Color;
 
-use crate::decoder::image::Image;
+use crate::decoder::Image;
 use test_helpers::fixture_path;
 
 #[test]
