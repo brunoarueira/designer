@@ -13,7 +13,7 @@ use crate::decoder::Image;
 #[test]
 fn test_color_palette_output_as_rgb_to_stdout() {
     let mut result = Vec::new();
-    let path = fixture_path("image-fixture.png");
+    let path = fixture_path("image-fixture-rgba.png");
     let image = Image::new(&path);
     let matches = App::new("myprog")
         .arg(Arg::with_name("b").short("b").takes_value(true))
@@ -39,7 +39,7 @@ fn test_color_palette_output_as_rgb_to_stdout() {
 #[test]
 fn test_color_palette_output_as_hex_to_stdout() {
     let mut result = Vec::new();
-    let path = fixture_path("image-fixture.png");
+    let path = fixture_path("image-fixture-rgba.png");
     let image = Image::new(&path);
     let matches = App::new("myprog")
         .arg(Arg::with_name("b").short("b").takes_value(true))
@@ -65,7 +65,7 @@ fn test_color_palette_output_as_hex_to_stdout() {
 #[test]
 fn test_dominant_color_as_rgb_to_stdout() {
     let mut result = Vec::new();
-    let path = fixture_path("image-fixture.png");
+    let path = fixture_path("image-fixture-rgba.png");
     let image = Image::new(&path);
     let matches = App::new("myprog")
         .arg(Arg::with_name("b").short("b").takes_value(true))
@@ -82,7 +82,7 @@ fn test_dominant_color_as_rgb_to_stdout() {
 #[test]
 fn test_dominant_color_as_hex_to_stdout() {
     let mut result = Vec::new();
-    let path = fixture_path("image-fixture.png");
+    let path = fixture_path("image-fixture-rgba.png");
     let image = Image::new(&path);
     let matches = App::new("myprog")
         .arg(Arg::with_name("b").short("b").takes_value(true))
@@ -99,7 +99,7 @@ fn test_dominant_color_as_hex_to_stdout() {
 #[test]
 fn test_color_palette_output_as_rgb_to_file() {
     let mut result = Vec::new();
-    let path = fixture_path("image-fixture.png");
+    let path = fixture_path("image-fixture-rgba.png");
     let image = Image::new(&path);
     let matches = App::new("myprog")
         .arg(Arg::with_name("b").short("b").takes_value(true))
@@ -125,7 +125,7 @@ fn test_color_palette_output_as_rgb_to_file() {
 #[test]
 fn test_color_palette_output_as_hex_to_file() {
     let mut result = Vec::new();
-    let path = fixture_path("image-fixture.png");
+    let path = fixture_path("image-fixture-rgba.png");
     let image = Image::new(&path);
     let matches = App::new("myprog")
         .arg(Arg::with_name("b").short("b").takes_value(true))
