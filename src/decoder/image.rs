@@ -1,4 +1,4 @@
-use color_thief::{Color, ColorFormat};
+use color_thief::{Color, ColorFormat, get_palette};
 
 use std::path::Path;
 
@@ -25,11 +25,10 @@ impl<'a> Image<'a> {
     }
 
     pub fn palette(&self) -> Option<Vec<Color>> {
-        match image::open(&self.resolved_path()) {
+        match image::open(self.resolved_path()) {
             Ok(image) => {
                 let color_type = find_color(image.color());
-                let colors =
-                    color_thief::get_palette(&image.into_bytes(), color_type, 10, 10).unwrap();
+                let colors = get_palette(&image.into_bytes(), color_type, 10, 10).unwrap();
 
                 Some(colors)
             }
@@ -49,7 +48,7 @@ impl<'a> Image<'a> {
     }
 
     pub fn file_basename(&self) -> &str {
-        &self.resolved_path().file_stem().unwrap().to_str().unwrap()
+        self.resolved_path().file_stem().unwrap().to_str().unwrap()
     }
 
     pub fn dominant_color(&self) -> Color {
