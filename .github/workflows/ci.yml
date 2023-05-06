@@ -1,0 +1,48 @@
+on: [push]
+
+name: CI
+
+jobs:
+  linter:
+    name: Linters
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          components: clippy
+          override: true
+      - uses: actions-rs/clippy-check@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    needs: linter
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: cargo test
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+
+      - name: cargo tarpaulin
+        uses: actions-rs/tarpaulin@v0.1
+        with:
+          version: '0.15.0'
+          args: '--exclude-files src/decoder/mod.rs -- --test-threads 1'
+
+      - name: Upload to codecov.io
+        uses: codecov/codecov-action@v1.0.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
