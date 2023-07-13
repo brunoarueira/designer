@@ -3,7 +3,7 @@ mod test_helpers;
 
 use std::fs::read_to_string;
 
-use clap::{App, Arg};
+use clap::{Arg, ArgAction, Command};
 
 use test_helpers::fixture_path;
 
@@ -15,15 +15,14 @@ fn test_color_palette_output_as_rgb_to_stdout() {
     let mut result = Vec::new();
     let path = fixture_path("image-fixture-rgba.png");
     let image = Image::new(&path);
-    let matches = App::new("myprog")
-        .arg(Arg::with_name("b").short("b").takes_value(true))
-        .arg(Arg::with_name("format").short("f").takes_value(true))
-        .arg(Arg::with_name("palette").short("p"))
+    let matches = Command::new("myprog")
+        .arg(Arg::new("brand-logo").short('b'))
+        .arg(Arg::new("format").short('f'))
+        .arg(Arg::new("palette").short('p').action(ArgAction::SetTrue))
         .arg(
-            Arg::with_name("output")
-                .short("o")
+            Arg::new("output")
+                .short('o')
                 .default_value("terminal")
-                .takes_value(true),
         )
         .get_matches_from(vec!["myprog", "-b", &path, "-f", "rgb", "-p"]);
     let command_line_option = CommandLineOption::new(&matches, &image);
@@ -41,15 +40,14 @@ fn test_color_palette_output_as_hex_to_stdout() {
     let mut result = Vec::new();
     let path = fixture_path("image-fixture-rgba.png");
     let image = Image::new(&path);
-    let matches = App::new("myprog")
-        .arg(Arg::with_name("b").short("b").takes_value(true))
-        .arg(Arg::with_name("format").short("f").takes_value(true))
-        .arg(Arg::with_name("palette").short("p"))
+    let matches = Command::new("myprog")
+        .arg(Arg::new("brand-logo").short('b'))
+        .arg(Arg::new("format").short('f'))
+        .arg(Arg::new("palette").short('p').action(ArgAction::SetTrue))
         .arg(
-            Arg::with_name("output")
-                .short("o")
+            Arg::new("output")
+                .short('o')
                 .default_value("terminal")
-                .takes_value(true),
         )
         .get_matches_from(vec!["myprog", "-b", &path, "-f", "hex", "-p"]);
     let command_line_option = CommandLineOption::new(&matches, &image);
@@ -67,11 +65,11 @@ fn test_dominant_color_as_rgb_to_stdout() {
     let mut result = Vec::new();
     let path = fixture_path("image-fixture-rgba.png");
     let image = Image::new(&path);
-    let matches = App::new("myprog")
-        .arg(Arg::with_name("b").short("b").takes_value(true))
-        .arg(Arg::with_name("format").short("f").takes_value(true))
-        .arg(Arg::with_name("dominant-color").short("o"))
-        .get_matches_from(vec!["myprog", "-b", &path, "-f", "rgb", "-o"]);
+    let matches = Command::new("myprog")
+        .arg(Arg::new("brand-logo").short('b').required(true))
+        .arg(Arg::new("format").short('f'))
+        .arg(Arg::new("dominant-color").short('d').action(ArgAction::SetTrue))
+        .get_matches_from(vec!["myprog", "-b", &path, "-f", "rgb", "-d"]);
     let command_line_option = CommandLineOption::new(&matches, &image);
 
     command_line_option.handle(&mut result);
@@ -84,11 +82,11 @@ fn test_dominant_color_as_hex_to_stdout() {
     let mut result = Vec::new();
     let path = fixture_path("image-fixture-rgba.png");
     let image = Image::new(&path);
-    let matches = App::new("myprog")
-        .arg(Arg::with_name("b").short("b").takes_value(true))
-        .arg(Arg::with_name("format").short("f").takes_value(true))
-        .arg(Arg::with_name("dominant-color").short("o"))
-        .get_matches_from(vec!["myprog", "-b", &path, "-f", "hex", "-o"]);
+    let matches = Command::new("myprog")
+        .arg(Arg::new("brand-logo").short('b'))
+        .arg(Arg::new("format").short('f'))
+        .arg(Arg::new("dominant-color").short('d').action(ArgAction::SetTrue))
+        .get_matches_from(vec!["myprog", "-b", &path, "-f", "hex", "-d"]);
     let command_line_option = CommandLineOption::new(&matches, &image);
 
     command_line_option.handle(&mut result);
@@ -101,15 +99,14 @@ fn test_color_palette_output_as_rgb_to_file() {
     let mut result = Vec::new();
     let path = fixture_path("image-fixture-rgba.png");
     let image = Image::new(&path);
-    let matches = App::new("myprog")
-        .arg(Arg::with_name("b").short("b").takes_value(true))
-        .arg(Arg::with_name("format").short("f").takes_value(true))
-        .arg(Arg::with_name("palette").short("p"))
+    let matches = Command::new("myprog")
+        .arg(Arg::new("brand-logo").short('b'))
+        .arg(Arg::new("format").short('f'))
+        .arg(Arg::new("palette").short('p').action(ArgAction::SetTrue))
         .arg(
-            Arg::with_name("output")
-                .short("o")
+            Arg::new("output")
+                .short('o')
                 .default_value("file")
-                .takes_value(true),
         )
         .get_matches_from(vec!["myprog", "-b", &path, "-f", "rgb", "-p"]);
     let command_line_option = CommandLineOption::new(&matches, &image);
@@ -127,15 +124,14 @@ fn test_color_palette_output_as_hex_to_file() {
     let mut result = Vec::new();
     let path = fixture_path("image-fixture-rgba.png");
     let image = Image::new(&path);
-    let matches = App::new("myprog")
-        .arg(Arg::with_name("b").short("b").takes_value(true))
-        .arg(Arg::with_name("format").short("f").takes_value(true))
-        .arg(Arg::with_name("palette").short("p"))
+    let matches = Command::new("myprog")
+        .arg(Arg::new("brand-logo").short('b'))
+        .arg(Arg::new("format").short('f'))
+        .arg(Arg::new("palette").short('p').action(ArgAction::SetTrue))
         .arg(
-            Arg::with_name("output")
-                .short("o")
+            Arg::new("output")
+                .short('o')
                 .default_value("file")
-                .takes_value(true),
         )
         .get_matches_from(vec!["myprog", "-b", &path, "-f", "hex", "-p"]);
     let command_line_option = CommandLineOption::new(&matches, &image);
@@ -153,17 +149,16 @@ fn test_color_palette_output_from_not_found_image_to_file() {
     let mut result = Vec::new();
     let path = fixture_path("image-fixture2.png");
     let image = Image::new(&path);
-    let matches = App::new("myprog")
-        .arg(Arg::with_name("b").short("b").takes_value(true))
-        .arg(Arg::with_name("format").short("f").takes_value(true))
-        .arg(Arg::with_name("palette").short("p"))
+    let matches = Command::new("myprog")
+        .arg(Arg::new("brand-logo").short('b'))
+        .arg(Arg::new("format").short('f'))
+        .arg(Arg::new("palette").short('p').action(ArgAction::SetTrue))
         .arg(
-            Arg::with_name("output")
-                .short("o")
+            Arg::new("output")
+                .short('o')
                 .default_value("file")
-                .takes_value(true),
         )
-        .get_matches_from(vec!["myprog", "-b", &path, "-f", "rgb", "-p"]);
+        .get_matches_from(vec!["myprog", "-b", &path, "-f", "rgb", "-p", "-o", "file"]);
     let command_line_option = CommandLineOption::new(&matches, &image);
 
     command_line_option.handle(&mut result);
