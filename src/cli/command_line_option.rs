@@ -22,7 +22,7 @@ fn palette(matches: &ArgMatches, format: &str, image: &Image, mut writer: impl W
         Some(colors) => {
             let image_basename = image.file_basename();
 
-            let output = matches.value_of("output").unwrap();
+            let output = matches.get_one::<String>("output").unwrap();
 
             if output == "terminal" {
                 for color in &colors {
@@ -61,12 +61,12 @@ fn palette(matches: &ArgMatches, format: &str, image: &Image, mut writer: impl W
 
 #[derive(Debug)]
 pub struct CommandLineOption<'a> {
-    matches: &'a ArgMatches<'a>,
+    matches: &'a ArgMatches,
     image: &'a Image<'a>,
 }
 
 impl<'a> CommandLineOption<'a> {
-    pub fn new(matches: &'a ArgMatches<'a>, image: &'a Image<'a>) -> Self {
+    pub fn new(matches: &'a ArgMatches, image: &'a Image<'a>) -> Self {
         CommandLineOption {
             matches,
             image,
@@ -80,13 +80,17 @@ impl<'a> CommandLineOption<'a> {
     }
 
     pub fn handle(&self, mut writer: impl Write) {
-        let format = self.matches.value_of("format").unwrap();
+        let format = self.matches.get_one::<String>("format").unwrap();
 
-        if self.matches.occurrences_of("palette") > 0 {
+        let palette_value: bool = self.matches.try_contains_id("palette").is_ok();
+
+        if palette_value {
             palette(self.matches, format, self.image, &mut writer);
         }
 
-        if self.matches.occurrences_of("dominant-color") > 0 {
+        let dominant_color_value: bool = self.matches.try_contains_id("dominant-color").is_ok();
+
+        if dominant_color_value {
             self.dominant_color(format, &mut writer);
         }
     }
