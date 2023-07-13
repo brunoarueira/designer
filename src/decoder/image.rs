@@ -1,11 +1,12 @@
-use color_thief::{Color, ColorFormat, get_palette};
-
 use std::path::Path;
 
-fn find_color(t: image::ColorType) -> ColorFormat {
+use color_thief::{Color, ColorFormat, get_palette};
+use image::ColorType;
+
+fn find_color(t: ColorType) -> ColorFormat {
     match t {
-        image::ColorType::Rgb8 => ColorFormat::Rgb,
-        image::ColorType::Rgba8 => ColorFormat::Rgba,
+        ColorType::Rgb8 => ColorFormat::Rgb,
+        ColorType::Rgba8 => ColorFormat::Rgba,
         _ => unreachable!(),
     }
 }
